@@ -330,7 +330,7 @@ namespace MENU
 					{
 						SETTINGS::settings.Load(config);
 
-						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[arabhack] ");
+						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[arabhacks] ");
 						GLOBAL::Msg("Configuration loaded.    \n");
 					}
 					
@@ -338,7 +338,7 @@ namespace MENU
 					{
 						SETTINGS::settings.Save(config);
 
-						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[arabhack] ");
+						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[arabhacks] ");
 						GLOBAL::Msg("Configuration saved.    \n");
 					}
 					GroupboxEnd();
