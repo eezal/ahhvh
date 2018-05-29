@@ -258,7 +258,7 @@ namespace SDK
 
 		NetChannel* GetNetChannel()
 		{
-			auto client_state = *reinterpret_cast<uintptr_t*>(uintptr_t(GetModuleHandle("engine.dll")) + 0x57E854);
+			auto client_state = *reinterpret_cast<uintptr_t*>(uintptr_t(GetModuleHandle("engine.dll")) + 0x57F85C);
 			if (!client_state)
 				return nullptr;
 

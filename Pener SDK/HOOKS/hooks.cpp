@@ -35,6 +35,7 @@
 #include "../FEATURES/EnginePred.h"
 #include "../FEATURES/Extrapolation.h"
 #include "../FEATURES/EventListener.h"
+#include "../FEATURES/Hitmarker.h"
 
 #include "../MENU/menu_framework.h"
 
@@ -251,6 +252,8 @@ namespace HOOKS
 			RENDER::DrawSomething();
 
 			visuals->LogEvents();
+
+			pHitmarker->Paint();
 		}
 
 		original_paint_traverse(INTERFACES::Panel, VGUIPanel, ForceRepaint, AllowForce);

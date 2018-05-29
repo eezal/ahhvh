@@ -106,7 +106,7 @@ namespace MENU
 				DrawMouse();
 
 				SetFont(FONTS::menu_window_font);
-				WindowBegin("stackhack private", Vector2D(200, 200), Vector2D(700, 450));
+				WindowBegin("arabhacks hvh", Vector2D(200, 200), Vector2D(700, 450));
 
 				std::vector<std::string> tabs = { "aimbot", "visuals", "misc", "antiaim", "config" };
 				std::vector<std::string> aim_mode = { "rage", "legit" };
@@ -143,7 +143,7 @@ namespace MENU
 						if (SETTINGS::settings.aim_type == 0)
 						{
 							Combobox("aimbot mode", acc_mode, SETTINGS::settings.acc_type);
-							Slider("minimum hit-chance", 0, 99, SETTINGS::settings.chance_val);
+							Slider("minimum hitchance", 0, 99, SETTINGS::settings.chance_val);
 							Slider("minimum damage", 1, 100, SETTINGS::settings.damage_val);
 							Checkbox("uncenter hitboxes", SETTINGS::settings.multi_bool);
 							if (SETTINGS::settings.multi_bool)
@@ -151,9 +151,8 @@ namespace MENU
 								Slider("head scale", 0, 1, SETTINGS::settings.point_val);
 								Slider("body scale", 0, 1, SETTINGS::settings.body_val);
 							}
-						}
-						else
 							Checkbox("backtracking", SETTINGS::settings.back_bool);
+						}
 						GroupboxEnd();
 
 						if (SETTINGS::settings.aim_type == 0)
@@ -162,11 +161,11 @@ namespace MENU
 								GroupboxBegin("accuracy", 105);
 							else
 								GroupboxBegin("accuracy", 85);
-							Checkbox("angle correction", SETTINGS::settings.resolve_bool);
+							Checkbox("enable resolver", SETTINGS::settings.resolve_bool);
 							Checkbox("quick stop", SETTINGS::settings.stop_bool);
 							Combobox("delay shot", delay_shot, SETTINGS::settings.delay_shot);
 							if (SETTINGS::settings.delay_shot == 0)
-								Checkbox("extrapolation", SETTINGS::settings.fakefix_bool);
+								Checkbox("fakelag fix", SETTINGS::settings.fakefix_bool);
 							GroupboxEnd();
 						}
 					}
@@ -195,7 +194,7 @@ namespace MENU
 						Combobox("draw box", box_style, SETTINGS::settings.box_type);
 						if (SETTINGS::settings.box_type > 0)
 							ColorPicker("box", SETTINGS::settings.box_col);
-						Checkbox("draw name", SETTINGS::settings.name_bool);
+						Checkbox("draw names", SETTINGS::settings.name_bool);
 						Checkbox("draw weapon", SETTINGS::settings.weap_bool);
 						Checkbox("draw flags", SETTINGS::settings.info_bool);
 						Checkbox("draw health", SETTINGS::settings.health_bool);
@@ -248,6 +247,7 @@ namespace MENU
 						Checkbox("render spread", SETTINGS::settings.spread_bool);
 						//Checkbox("thirdperson effects", SETTINGS::settings.tp_angle_bool);
 						Checkbox("remove scope", SETTINGS::settings.scope_bool);
+						Checkbox("hitmarker", SETTINGS::settings.hitmarker);
 						GroupboxEnd();
 					}
 				}
@@ -283,7 +283,7 @@ namespace MENU
 						Slider("screen fov", 0, 90, SETTINGS::settings.fov_val);
 						Slider("viewmodel fov", 0, 90, SETTINGS::settings.vfov_val);
 						Checkbox("remove visual recoil", SETTINGS::settings.novis_bool);
-						Checkbox("force headshot", SETTINGS::settings.fake_bool);
+						Checkbox("fake killfeed", SETTINGS::settings.fake_bool);
 						if (SETTINGS::settings.fake_bool)
 							Combobox("spoof accuracy", media_style, SETTINGS::settings.media_type);
 
@@ -330,7 +330,7 @@ namespace MENU
 					{
 						SETTINGS::settings.Load(config);
 
-						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[stackhack] ");
+						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[arabhacks] ");
 						GLOBAL::Msg("Configuration loaded.    \n");
 					}
 					
@@ -338,7 +338,7 @@ namespace MENU
 					{
 						SETTINGS::settings.Save(config);
 
-						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[stackhack] ");
+						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[arabhacks] ");
 						GLOBAL::Msg("Configuration saved.    \n");
 					}
 					GroupboxEnd();
@@ -418,7 +418,7 @@ namespace MENU
 
 				//--- Feature Defenition ---//
 				RENDER::DrawWF(228, 24, FONTS::numpad_menu_font, CColor(255, 255, 255, 255), L"[\u25bc]");
-				RENDER::DrawF(256, 24, FONTS::numpad_menu_font, false, false, CColor(140, 140, 140, 255), "stackhack framework"); //255, 5, 210
+				RENDER::DrawF(256, 24, FONTS::numpad_menu_font, false, false, CColor(140, 140, 140, 255), "arabhacks hvh"); //255, 5, 210
 				RENDER::DrawF(380, 24, FONTS::numpad_menu_font, false, false, CColor(240, 25, 255, 255), "beta");
 				RENDER::DrawF(256, 54, FONTS::numpad_menu_font, false, false, CColor(255, 255, 255, 255), "bunnyhop:");
 				RENDER::DrawF(256, 70, FONTS::numpad_menu_font, false, false, CColor(255, 255, 255, 255), "autostrafer:");
@@ -539,7 +539,7 @@ namespace MENU
 			else
 			{
 				//RENDER::DrawWF(228, 24, FONTS::numpad_menu_font, CColor(255, 255, 255, 255), L"[\u25b2]");
-				//RENDER::DrawF(256, 24, FONTS::numpad_menu_font, false, false, CColor(140, 140, 140, 255), "stackhack framework");
+				//RENDER::DrawF(256, 24, FONTS::numpad_menu_font, false, false, CColor(140, 140, 140, 255), "arabhacks hvh");
 				//RENDER::DrawF(380, 24, FONTS::numpad_menu_font, false, false, CColor(240, 25, 255, 255), "beta");
 			}
 		}

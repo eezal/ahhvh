@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 
 namespace SDK
 {
@@ -7,12 +8,31 @@ namespace SDK
 	class CBaseWeapon;
 }
 
-struct Info 
+struct STickRecord {
+
+	bool operator==(STickRecord &other) {
+		return other.m_flSimulationTime == m_flSimulationTime;
+	}
+
+	float m_flVelocity = 0.f;
+	Vector m_vecVelocity = Vector(0, 0, 0);
+	float m_flSimulationTime = 0.f;
+	float m_flLowerBodyYawTarget = 0.f;
+	QAngle m_angEyeAngles = QAngle(0, 0, 0);
+	std::array<float, 24> m_flPoseParameter = {};
+	float m_flCurTime = 0.f;
+	int m_nFlags = 0;
+
+	int m_iLayerCount = 0;
+	SDK::CAnimationLayer animationLayer[15];
+};
+
+struct Info
 {
 	Info() {}
 
 	SDK::CAnimationLayer backup_layer, prev_layer;
-	Vector last_lby, inverse, inverse_right, inverse_left, lby, back, left, right, backtrack, wideright, wideleft, forwards;
+	Vector last_lby, inverse, inverse_right, inverse_left, lby, back, left, right, backtrack;
 	float stored_simtime, last_move_time, pre_anim_lby;
 	int last_ammo;
 	bool breaking_lby, reset_state, could_be_faking;
@@ -36,6 +56,9 @@ class CResolver
 public:
 	Info player_info[65];
 	void record(SDK::CBaseEntity * entity, float new_yaw);
+	void Experimental(SDK::CBaseEntity * entity);
+	void Default(SDK::CBaseEntity * entity);
+	void Nospread(SDK::CBaseEntity* player, int entID);
 	void resolve(SDK::CBaseEntity* entity);
 };
 

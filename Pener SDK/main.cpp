@@ -9,6 +9,8 @@
 
 #include "MENU\menu_framework.h"
 
+#include "FEATURES/Hitmarker.h"
+
 #include <chrono>
 #include <thread>
 
@@ -73,6 +75,8 @@ void Start()
 	HOOKS::InitHooks();
 	HOOKS::InitNetvarHooks();
 	CGameEvents::InitializeEventListeners();
+	pHitmarker->Initialize();
+
 }
 
 __declspec(noinline) void start_end()
@@ -88,7 +92,7 @@ void wait_nigger()
 
 void information()
 {
-	std::string henlo = "Dear user, congratulations on checking out stackhack. Now believe it or not, the hack isn't ayyware! It truely is based from the SDK made by Bolbi B. Benson (s/o to bolbi). Not much is pasted in here, pretty much just hitchance and creatematerial, so be accurate when leaking the hack. Cheers ;)";
+	std::string henlo = "yeet yah";
 }
 
 BOOL WINAPI DllMain(HINSTANCE Instance, DWORD Reason, LPVOID Reserved)

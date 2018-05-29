@@ -78,7 +78,7 @@ namespace SETTINGS
 
 	bool CSettings::Save(std::string file_name)
 	{
-		std::string file_path = "C:\\stackhack configs\\" + file_name + ".cfg";
+		std::string file_path = "C:\\arabhacks configs\\" + file_name + ".cfg";
 
 		std::fstream file(file_path, std::ios::out | std::ios::in | std::ios::trunc);
 		file.close();
@@ -106,9 +106,9 @@ namespace SETTINGS
 	}
 	bool CSettings::Load(std::string file_name)
 	{
-		CreateDirectory("C:\\stackhack configs", NULL);
+		CreateDirectory("C:\\arabhacks configs", NULL);
 
-		std::string file_path = "C:\\stackhack configs\\" + file_name + ".cfg";
+		std::string file_path = "C:\\arabhacks configs\\" + file_name + ".cfg";
 
 		std::fstream file;
 		file.open(file_path, std::ios::out | std::ios::in);
@@ -149,7 +149,7 @@ namespace SETTINGS
 	}
 	void CSettings::CreateConfig()
 	{
-		std::string file_path = "C:\stackhack configs\\BlankConfig.cfg";
+		std::string file_path = "C:\arabhacks configs\\BlankConfig.cfg";
 
 		std::fstream file;
 		file.open(file_path, std::ios::out | std::ios::in | std::ios::trunc);
@@ -161,7 +161,7 @@ namespace SETTINGS
 		std::vector<std::string> configs;
 
 		WIN32_FIND_DATA ffd;
-		auto directory = "C:\\stackhack configs\\*";
+		auto directory = "C:\\arabhacks configs\\*";
 		auto hFind = FindFirstFile(directory, &ffd);
 
 		while (FindNextFile(hFind, &ffd))

@@ -224,12 +224,12 @@ namespace SDK
 		float GetSpreadCone()
 		{
 			typedef float(__thiscall* Fn)(void*);
-			return VMT::VMTHookManager::GetFunction<Fn>(this, 439)(this);
+			return VMT::VMTHookManager::GetFunction<Fn>(this, 437)(this);
 		}
 		float GetInaccuracy()
 		{
 			typedef float(__thiscall* Fn)(void*);
-			return VMT::VMTHookManager::GetFunction<Fn>(this, 470)(this); //469
+			return VMT::VMTHookManager::GetFunction<Fn>(this, 468)(this); //469
 		}
 		HANDLE GetOwnerHandle()
 		{
@@ -282,13 +282,13 @@ namespace SDK
 		void UpdateAccuracyPenalty()
 		{
 			typedef void(__thiscall* Fn)(void*);
-			return VMT::VMTHookManager::GetFunction<Fn>(this, 471)(this); //470
+			return VMT::VMTHookManager::GetFunction<Fn>(this, 469)(this); //470
 		}
 		Weapon_Info* GetWeaponInfo()
 		{
 			if (!this) return nullptr;
 			typedef Weapon_Info*(__thiscall* Fn)(void*);
-			return VMT::VMTHookManager::GetFunction<Fn>(this, 447)(this);
+			return VMT::VMTHookManager::GetFunction<Fn>(this, 445)(this);
 		}
 		CSWeaponInfo* get_full_info()
 		{

@@ -126,6 +126,7 @@
     <ClInclude Include="FEATURES\Extrapolation.h" />
     <ClInclude Include="FEATURES\FakeLag.h" />
     <ClInclude Include="FEATURES\Fakewalk.h" />
+    <ClInclude Include="FEATURES\Hitmarker.h" />
     <ClInclude Include="FEATURES\Movement.h" />
     <ClInclude Include="FEATURES\Resolver.h" />
     <ClInclude Include="FEATURES\ShowRanks.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="FEATURES\Extrapolation.cpp" />
     <ClCompile Include="FEATURES\FakeLag.cpp" />
     <ClCompile Include="FEATURES\Fakewalk.cpp" />
+    <ClCompile Include="FEATURES\Hitmarker.cpp" />
     <ClCompile Include="FEATURES\Movement.cpp" />
     <ClCompile Include="FEATURES\Resolver.cpp" />
     <ClCompile Include="FEATURES\ShowRanks.cpp" />

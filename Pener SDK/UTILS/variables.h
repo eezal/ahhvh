@@ -104,6 +104,7 @@ namespace SETTINGS
 		bool resolve_bool;
 		bool ammo_bool;
 		bool spread_bool;
+		bool hitmarker;
 
 		float stand_lag;
 		float move_lag;

@@ -128,6 +128,10 @@ public:
 		return Brightness(*this);
 	}
 
+	void SetAlpha(int a) {
+		RGBA[0] = (unsigned char)a;
+	}
+
 	// HSB -> RGB
 	static CColor HSBtoRGB(float hue /* 0.f - 1.f*/,
 		float saturation /* 0.f - 1.f */,
@@ -158,6 +162,8 @@ public:
 			return CColor(brightness * 255, p * 255, q * 255, alpha);
 
 	}
+
+	
 
 	/*
 	static CColor WHITE() { return CColor(255, 255, 255); }

@@ -108,7 +108,7 @@ void CGameEvents::WeaponFiredListener::FireGameEvent(SDK::IGameEvent* game_event
 				{
 					if (rand() % 100 < 50)
 					{
-						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[stackhack] ");
+						INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[arabhacks] ");
 						GLOBAL::Msg("Missed shot due to spread    \n");
 					}
 				}
@@ -152,7 +152,6 @@ void CGameEvents::PlayerHurtListener::FireGameEvent(SDK::IGameEvent* game_event)
 		didMiss = false;
 
 		visuals->set_hitmarker_time( INTERFACES::Globals->curtime );
-		//PlaySound("C:\\stackhack\\hitsound.wav", NULL, SND_ASYNC);
 		INTERFACES::Surface->IPlaySound("buttons\\arena_switch_press_02.wav");
 
 		if (SETTINGS::settings.info_bool)
@@ -192,7 +191,7 @@ void CGameEvents::PlayerHurtListener::FireGameEvent(SDK::IGameEvent* game_event)
 
 			auto hitgroup = dothatshit ? "head" : HitgroupToName(hitbox);
 
-			INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[stackhack] " );
+			INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[arabhacks] " );
 			GLOBAL::Msg("Hit %s in the %s for %d damage (%d health remaining)    \n", pinfo.name, hitgroup, damage, health);
 		}
 		shots_hit[entity->GetIndex()]++;
@@ -260,7 +259,7 @@ void CGameEvents::ItemPurchaseListener::FireGameEvent(SDK::IGameEvent* game_even
 
 	if (SETTINGS::settings.info_bool)
 	{
-		INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[stackhack] ");
+		INTERFACES::cvar->ConsoleColorPrintf(CColor(200, 255, 0, 255), "[arabhacks] ");
 		GLOBAL::Msg("%s bought %s    \n", player_info.name, event_weapon);
 	}
 };
