@@ -283,6 +283,17 @@ namespace HOOKS
 
 				if (SETTINGS::settings.stop_bool)
 					movement->quick_stop(entity, cmd);
+
+				auto Animationss = entity->GetAnimState();
+				if (Animationss->m_iLastClientSideAnimationUpdateFramecount)
+					Animationss->m_iLastClientSideAnimationUpdateFramecount--;
+
+				if (Animationss->m_flLastClientSideAnimationUpdateTime)
+					Animationss->m_flLastClientSideAnimationUpdateTime -= INTERFACES::Globals->interval_per_tick;
+
+
+				AnimFix(entity);
+
 			}
 
 			if (SETTINGS::settings.aim_type == 0 && SETTINGS::settings.aim_bool)
