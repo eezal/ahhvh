@@ -30,6 +30,8 @@ namespace SDK
 	class IMoveHelper;
 }
 
+class CUtlVectorSimple;
+
 namespace INTERFACES
 {
 	extern SDK::IClient* Client;
@@ -57,6 +59,7 @@ namespace INTERFACES
 	extern SDK::CPrediction* pPrediction;
 	extern SDK::IGameMovement* pMovement;
 	extern SDK::IMoveHelper* pMoveHelper;
+	extern CUtlVectorSimple *g_ClientSideAnimationList;
 
 	void InitInterfaces();
 

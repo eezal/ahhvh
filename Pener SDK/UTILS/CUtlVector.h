@@ -1,5 +1,18 @@
 #pragma once
 
+
+class CUtlVectorSimple
+{
+public:
+	unsigned memory;
+	char pad[8];
+	unsigned int count;
+	inline void* Retrieve(int index, unsigned sizeofdata)
+	{
+		return (void*)((*(unsigned*)this) + (sizeofdata * index));
+	}
+};
+
 namespace UTILS
 {
 	inline int UtlMemory_CalcNewAllocationCount(int nAllocationCount, int nGrowSize, int nNewSize, int nBytesItem)
@@ -22,7 +35,7 @@ namespace UTILS
 	class CUtlMemory
 	{
 	public:
-		T& operator[](I i)
+		T & operator[](I i)
 		{
 			return m_pMemory[i];
 		}
@@ -73,7 +86,7 @@ namespace UTILS
 		}
 
 	protected:
-		T* m_pMemory;
+		T * m_pMemory;
 		int m_nAllocationCount;
 		int m_nGrowSize;
 	};
@@ -94,55 +107,8 @@ namespace UTILS
 	class CUtlVector
 	{
 		typedef A CAllocator;
-
-		typedef T *iterator;
-		typedef const T *const_iterator;
 	public:
 		T & operator[](int i)
-		{
-			return m_Memory[i];
-		}
-
-		T& Element(int i)
-		{
-			return m_Memory[i];
-		}
-
-		T* Base()
-		{
-			return m_Memory.Base();
-		}
-
-		int Count() const
-		{
-			return m_Size;
-		}
-
-		void RemoveAll()
-		{
-			for (int i = m_Size; --i >= 0; )
-				Destruct(&Element(i));
-
-			m_Size = 0;
-		}
-
-		iterator begin() { return Base(); }
-		const_iterator begin() const { return Base(); }
-		iterator end() { return Base() + Count(); }
-		const_iterator end() const { return Base() + Count(); }
-
-	protected:
-		CAllocator m_Memory;
-		int m_Size;
-		T *m_pElements;
-	};
-
-	/*template< class T, class A = CUtlMemory<T> >
-	class CUtlVector
-	{
-		typedef A CAllocator;
-	public:
-		T& operator[](int i)
 		{
 			return m_Memory[i];
 		}
@@ -210,5 +176,5 @@ namespace UTILS
 		{
 			m_pElements = Base();
 		}
-	};*/
+	};
 }

@@ -5,6 +5,7 @@
 #include "../UTILS/offsets.h"
 #include "../UTILS/NetvarHookManager.h"
 #include "../UTILS/render.h"
+#include "../UTILS/CUtlVector.h"
 
 #include "../SDK/CInput.h"
 #include "../SDK/IClient.h"
@@ -53,6 +54,8 @@ static auto CAM_THINK = UTILS::FindSignature("client.dll", "85 C0 75 30 38 86");
 static auto linegoesthrusmoke = UTILS::FindPattern("client.dll", (PBYTE)"\x55\x8B\xEC\x83\xEC\x08\x8B\x15\x00\x00\x00\x00\x0F\x57\xC0", "xxxxxxxx????xxx");
 static auto clientstate = *reinterpret_cast<uintptr_t*>(uintptr_t(GetModuleHandle("engine.dll")) + 0x57D894);
 
+
+
 //--- Tick Counting ---//
 void ground_ticks()
 {
@@ -93,6 +96,136 @@ namespace HOOKS
 	VMT::VMTHookManager override_view_hook_manager;
 	VMT::VMTHookManager input_table_manager;
 	VMT::VMTHookManager get_bool_manager;
+
+	void AnimFix(SDK::CBaseEntity* entity)
+	{
+
+		auto local_player = INTERFACES::ClientEntityList->GetClientEntity(INTERFACES::Engine->GetLocalPlayer());
+
+		if (!local_player)
+			return;
+
+		bool is_local_player = entity == local_player;
+		bool is_teammate = local_player->GetTeam() == entity->GetTeam() && !is_local_player;
+
+		if (is_local_player)
+			return;
+
+
+
+		struct clientanimating_t
+		{
+			SDK::CBaseAnimating *pAnimating;
+			unsigned int	flags;
+			clientanimating_t(SDK::CBaseAnimating *_pAnim, unsigned int _flags) : pAnimating(_pAnim), flags(_flags) {}
+		};
+
+
+		clientanimating_t *animating = nullptr;
+		int animflags;
+
+		const unsigned int FCLIENTANIM_SEQUENCE_CYCLE = 0x00000001;
+
+
+		SDK::CAnimationLayer AnimLayer[15];
+
+		int cnt = 15;
+		for (int i = 0; i < cnt; i++)
+		{
+			AnimLayer[i] = entity->GetAnimOverlay(i);
+		}
+
+		float flPoseParameter[24];
+		float* pose = (float*)((uintptr_t)entity + 0x2764);
+		memcpy(&flPoseParameter, pose, sizeof(float) * 24);
+
+		Vector TargetEyeAngles = *entity->GetEyeAnglesPointer();
+
+		bool bForceAnimationUpdate = entity->GetEyeAnglesPointer()->x != TargetEyeAngles.x || entity->GetEyeAnglesPointer()->y != TargetEyeAngles.y;
+
+		if (bForceAnimationUpdate)
+		{
+			//Update animations and pose parameters
+			clientanimating_t *animating = nullptr;
+			int animflags;
+
+			//Make sure game is allowed to client side animate. Probably unnecessary
+			for (unsigned int i = 0; i < INTERFACES::g_ClientSideAnimationList->count; i++)
+			{
+				clientanimating_t *tanimating = (clientanimating_t*)INTERFACES::g_ClientSideAnimationList->Retrieve(i, sizeof(clientanimating_t));
+				SDK::CBaseEntity *pAnimEntity = (SDK::CBaseEntity*)tanimating->pAnimating;
+				if (pAnimEntity == entity)
+				{
+					animating = tanimating;
+					animflags = tanimating->flags;
+					tanimating->flags |= FCLIENTANIM_SEQUENCE_CYCLE;
+					break;
+				}
+			}
+
+			//Update animations/poses
+			entity->UpdateClientSideAnimation();
+
+			//Restore anim flags
+			if (animating)
+				animating->flags = animflags;
+		}
+		for (unsigned int i = 0; i < INTERFACES::g_ClientSideAnimationList->count; i++)
+		{
+			clientanimating_t *animating = (clientanimating_t*)INTERFACES::g_ClientSideAnimationList->Retrieve(i, sizeof(clientanimating_t));
+			SDK::CBaseEntity *Entity = (SDK::CBaseEntity*)animating->pAnimating;
+			if (Entity != local_player && !Entity->GetIsDormant() && Entity->GetHealth() > 0)
+			{
+
+				int TickReceivedNetUpdate[65];
+
+				TickReceivedNetUpdate[entity->GetIndex()] = INTERFACES::Globals->tickcount;
+
+				bool HadClientAnimSequenceCycle[65];
+
+				int ClientSideAnimationFlags[65];
+				bool IsBreakingLagCompensation[65];
+				IsBreakingLagCompensation[entity->GetIndex()] = !Entity->GetIsDormant() && entity->GetVecOrigin().LengthSqr() > (64.0f * 64.0f);
+
+				unsigned int flags = animating->flags;
+				ClientSideAnimationFlags[entity->GetIndex()] = flags;
+				HadClientAnimSequenceCycle[entity->GetIndex()] = (flags & FCLIENTANIM_SEQUENCE_CYCLE);
+				if (HadClientAnimSequenceCycle[entity->GetIndex()])
+				{
+					if (IsBreakingLagCompensation[entity->GetIndex()] && INTERFACES::Globals->tickcount != TickReceivedNetUpdate[entity->GetIndex()])
+					{
+						Entity->UpdateClientSideAnimation();
+						//Store the new animations
+						Entity->CopyPoseParameters(flPoseParameter);
+						Entity->CopyAnimLayers(AnimLayer);
+					}
+				}
+			}
+		}
+		if (is_local_player) {
+
+			for (unsigned int i = 0; i < INTERFACES::g_ClientSideAnimationList->count; i++)
+			{
+				clientanimating_t *animating = (clientanimating_t*)INTERFACES::g_ClientSideAnimationList->Retrieve(i, sizeof(clientanimating_t));
+				SDK::CBaseEntity *Entity = (SDK::CBaseEntity*)animating->pAnimating;
+				if (Entity != local_player && !Entity->GetIsDormant() && Entity->GetHealth() > 0)
+				{
+					bool HadClientAnimSequenceCycle[65];
+
+					int ClientSideAnimationFlags[65];
+
+					unsigned int flags = animating->flags;
+					ClientSideAnimationFlags[entity->GetIndex()] = flags;
+					HadClientAnimSequenceCycle[entity->GetIndex()] = (flags & FCLIENTANIM_SEQUENCE_CYCLE);
+
+					if (HadClientAnimSequenceCycle[entity->GetIndex()])
+					{
+						animating->flags |= FCLIENTANIM_SEQUENCE_CYCLE;
+					}
+				}
+			}
+		}
+	}
 
 	bool __stdcall HookedCreateMove(float sample_input_frametime, SDK::CUserCmd* cmd)
 	{ 

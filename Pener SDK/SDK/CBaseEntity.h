@@ -194,6 +194,23 @@ namespace SDK
 		{
 			return *reinterpret_cast<float*>(uintptr_t(this) + OFFSETS::m_flLowerBodyYawTarget);
 		}
+		Vector* GetEyeAnglesPointer()
+		{
+			return reinterpret_cast<Vector*>((DWORD)this + OFFSETS::m_angEyeAngles);
+		}
+		void CBaseEntity::CopyAnimLayers(SDK::CAnimationLayer* dest)
+		{
+			int count = 15;
+			for (int i = 0; i < count; i++)
+			{
+				dest[i] = GetAnimOverlay(i);
+			}
+		}
+		void CBaseEntity::CopyPoseParameters(float* dest)
+		{
+			float* flPose = (float*)((DWORD)this + 0x2764);
+			memcpy(dest, flPose, sizeof(float) * 24);
+		}
 		Vector GetVecOrigin()
 		{
 			return *reinterpret_cast<Vector*>(uintptr_t(this) + OFFSETS::m_vecOrigin);

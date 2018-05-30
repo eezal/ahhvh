@@ -30,7 +30,7 @@ namespace INTERFACES
 	SDK::CPrediction* pPrediction;
 	SDK::IGameMovement* pMovement;
 	SDK::IMoveHelper* pMoveHelper;
-
+	CUtlVectorSimple *g_ClientSideAnimationList;
 	void InitInterfaces()
 	{
 		Client = reinterpret_cast<SDK::IClient*>(FindInterface("client.dll", "VClient"));
@@ -56,6 +56,8 @@ namespace INTERFACES
 		pPrediction = reinterpret_cast<SDK::CPrediction*>(FindInterfaceEx("client.dll", "VClientPrediction001"));
 		pMovement = reinterpret_cast<SDK::IGameMovement*>(FindInterfaceEx("client.dll", "GameMovement001"));
 		pMoveHelper = **reinterpret_cast<SDK::IMoveHelper***>((UTILS::FindSignature("client.dll", "8B 0D ? ? ? ? 8B 46 08 68") + 0x2));
+
+		g_ClientSideAnimationList = (CUtlVectorSimple*)*(DWORD*)(UTILS::FindSignature("client.dll", "A1 ? ? ? ? F6 44 F0 04 01 74 0B") + 1);
 
 		Globals = **reinterpret_cast<SDK::CGlobalVars***>((*reinterpret_cast< DWORD** >(Client))[0] + 0x1B);
 		void** pClientTable = *reinterpret_cast<void***>(Client);

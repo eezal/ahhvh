@@ -334,7 +334,7 @@ namespace SDK
 	class CBaseCSGrenade : CBaseWeapon
 	{
 	public:
-		/*float pin_pulled()
+		float pin_pulled()
 		{
 			return *reinterpret_cast<float*>(uintptr_t(this) + OFFSETS::m_bPinPulled);
 		}
@@ -342,6 +342,6 @@ namespace SDK
 		float throw_time()
 		{
 			return *reinterpret_cast<float*>(uintptr_t(this) + OFFSETS::m_fThrowTime);
-		}*/
+		}
 	};
 }
