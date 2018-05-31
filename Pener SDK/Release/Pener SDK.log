@@ -1,40 +1,7 @@
-﻿  Aimbot.cpp
-  AnimFix.cpp
-  AntiAim.cpp
-  AutoWall.cpp
-  Backtracking.cpp
-  Chams.cpp
-  EnginePred.cpp
-  EventListener.cpp
-  Extrapolation.cpp
-  FakeLag.cpp
-  Fakewalk.cpp
-  Hitmarker.cpp
-  Movement.cpp
-  Resolver.cpp
-  ShowRanks.cpp
-  Visuals.cpp
+﻿  Hitmarker.cpp
   main.cpp
-  menu_commands.cpp
-  menu_framework.cpp
-  menu_init.cpp
-  Compiling...
-  menu_objects.cpp
-  CGlobalVars.cpp
-  sdk.cpp
-  general_utils.cpp
   hooks.cpp
-  input_handler.cpp
-  interfaces.cpp
-  logging.cpp
-  math.cpp
-  NetvarHookManager.cpp
-  offsets.cpp
-  render.cpp
-  spoofedconvar.cpp
-  variables.cpp
-  vmt.cpp
   Generating code
-  All 2560 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 2564 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Pener SDK.vcxproj -> C:\Users\Zach\Documents\Cheetos\Sources\ahhvh\Release\Pener SDK.dll

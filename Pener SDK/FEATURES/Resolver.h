@@ -1,5 +1,4 @@
 #pragma once
-#include <array>
 
 namespace SDK
 {
@@ -7,25 +6,6 @@ namespace SDK
 	class CBaseEntity;
 	class CBaseWeapon;
 }
-
-struct STickRecord {
-
-	bool operator==(STickRecord &other) {
-		return other.m_flSimulationTime == m_flSimulationTime;
-	}
-
-	float m_flVelocity = 0.f;
-	Vector m_vecVelocity = Vector(0, 0, 0);
-	float m_flSimulationTime = 0.f;
-	float m_flLowerBodyYawTarget = 0.f;
-	QAngle m_angEyeAngles = QAngle(0, 0, 0);
-	std::array<float, 24> m_flPoseParameter = {};
-	float m_flCurTime = 0.f;
-	int m_nFlags = 0;
-
-	int m_iLayerCount = 0;
-	SDK::CAnimationLayer animationLayer[15];
-};
 
 struct Info
 {
@@ -56,9 +36,6 @@ class CResolver
 public:
 	Info player_info[65];
 	void record(SDK::CBaseEntity * entity, float new_yaw);
-	void Experimental(SDK::CBaseEntity * entity);
-	void Default(SDK::CBaseEntity * entity);
-	void Nospread(SDK::CBaseEntity* player, int entID);
 	void resolve(SDK::CBaseEntity* entity);
 };
 
